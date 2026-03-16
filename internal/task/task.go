@@ -10,11 +10,11 @@ const (
 )
 
 type Task struct {
-	ID          string
-	Name        string
-	Description string
-	Status      Status
-	Priority    int
+	ID          string `json:"id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	Status      Status `json:"status"`
+	Priority    int    `json:"priority"`
 }
 
 func (t Task) Validate() bool {
