@@ -56,3 +56,15 @@ func (ts *TaskService) CompleteTask(
 	return true, nil
 
 }
+
+func (ts *TaskService) DeleteTask(
+	id string,
+) error {
+	err := ts.repo.Delete(id)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
