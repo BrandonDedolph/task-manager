@@ -32,3 +32,27 @@ func (ts *TaskService) CreateTask(
 	}
 	return &t, nil
 }
+
+func (ts *TaskService) CompleteTask(
+	id string,
+) (bool, error) {
+	t, err := ts.repo.FindById(id)
+
+	if err != nil {
+		return false, err
+	}
+
+	if t == nil {
+		return false, nil
+	}
+
+	t.Status = task.StatusComplete
+	err = ts.repo.Update(*t)
+
+	if err != nil {
+		return false, err
+	}
+
+	return true, nil
+
+}
