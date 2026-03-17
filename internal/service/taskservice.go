@@ -68,3 +68,13 @@ func (ts *TaskService) DeleteTask(
 
 	return nil
 }
+
+func (ts *TaskService) ListTasks() ([]task.Task, error) {
+	tasks, err := ts.repo.FindAll()
+	if err != nil {
+		return nil, err
+	}
+
+	return tasks, nil
+
+}
