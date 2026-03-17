@@ -78,3 +78,8 @@ func (ts *TaskService) ListTasks() ([]task.Task, error) {
 	return tasks, nil
 
 }
+
+func (ts *TaskService) UpdateTask(t task.Task) error {
+	return ts.repo.Update(t)
+
+}
