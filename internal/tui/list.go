@@ -68,4 +68,3 @@ func (m model) View() string {
 
 	return header + builder.String() + footer
 }
-
