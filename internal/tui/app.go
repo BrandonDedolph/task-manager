@@ -21,8 +21,12 @@ type switchToConfirmMsg struct {
 	task *task.Task
 }
 
-func NewViewModel(v tea.Model, s *service.TaskService) *ViewModel {
-	return &ViewModel{activeView: v, service: s}
+func NewViewModel(s *service.TaskService) (*ViewModel, error) {
+	listModel, err := NewModel(s)
+	if err != nil {
+		return nil, err
+	}
+	return &ViewModel{activeView: listModel, service: s}, nil
 }
 
 func (vm ViewModel) Init() tea.Cmd {
