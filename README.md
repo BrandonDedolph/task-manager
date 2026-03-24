@@ -18,12 +18,17 @@ A terminal-based task manager built with Go and [Bubble Tea](https://github.com/
 The project follows clean architecture principles with clearly separated layers:
 
 ```
+cmd/
+└── main.go          # Entry point — wires dependencies together
+
 internal/
-├── task/          # Domain model and repository interface
-├── service/       # Business logic (CRUD operations)
-├── datastore/     # File-based JSON persistence
-└── tui/           # Terminal UI (list, form, confirm views)
+├── task/            # Domain model and repository interface
+├── datastore/       # File-based JSON persistence (implements Repository)
+├── service/         # Business logic (CRUD operations)
+└── tui/             # Terminal UI (list, form, confirm views)
 ```
+
+**Data flow:** `TUI → TaskService → FileRepository → tasks.json`
 
 ## Tech Stack
 
@@ -54,20 +59,24 @@ go build -o task-manager ./cmd/...
 ### Run
 
 ```sh
-./task-manager
+go run ./cmd/
 ```
 
 ## Usage
 
-| Key          | Action              |
-|--------------|---------------------|
-| `j` / `↓`   | Move cursor down    |
-| `k` / `↑`   | Move cursor up      |
-| `Enter`      | Confirm / submit    |
-| `Esc`        | Cancel / go back    |
-| `y`          | Confirm deletion    |
-| `n`          | Cancel deletion     |
-| `q`          | Quit                |
+| Key              | Action                  |
+|------------------|-------------------------|
+| `j` / `↓`       | Move cursor down        |
+| `k` / `↑`       | Move cursor up          |
+| `a`              | Add new task            |
+| `e`              | Edit selected task      |
+| `d`              | Delete selected task    |
+| `Space` / `Enter`| Complete selected task  |
+| `Enter`          | Confirm / submit form   |
+| `Esc`            | Cancel / go back        |
+| `y`              | Confirm deletion        |
+| `n`              | Cancel deletion         |
+| `q` / `Ctrl+C`  | Quit                    |
 
 ## Task Model
 
