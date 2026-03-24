@@ -30,7 +30,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch msg.String() {
-		case "q":
+		case "q", "ctrl+c":
 			return m, tea.Quit
 		case "up", "k":
 			if m.cursor > 0 {
@@ -39,6 +39,24 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "down", "j":
 			if m.cursor < len(m.tasks)-1 {
 				m.cursor++
+			}
+		case "e":
+			return m, func() tea.Msg {
+				return switchToEditMsg{task: &m.tasks[m.cursor]}
+			}
+		case "d":
+			return m, func() tea.Msg {
+				return switchToConfirmMsg{task: &m.tasks[m.cursor]}
+			}
+		case "a":
+			return m, func() tea.Msg {
+				return switchToFormMsg{}
+			}
+		case "space", "enter":
+			m.service.CompleteTask(m.tasks[m.cursor].ID)
+			tasks, err := m.service.ListTasks()
+			if err == nil {
+				m.tasks = tasks
 			}
 		}
 	}
